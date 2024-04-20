@@ -1,3 +1,21 @@
+"""
+EJERCICIO PRACTICO: POO
+fecha: 16 de abril 2024
+seccion: 305C1 
+Estudiante: Santiago Perrotta
+
+Actividad
+1. Crear una clase PERSONA
+2. Atributos de la clase: nombre,edad,identificacion
+3. Metodos: constructor, sets,gets, mostrar datos,
+Devolver mediante un valor logico si es mayor de edad
+4. validar datos en la consola
+
+caso 1: datos ingresados por el teclado
+caso 2: matriz generada
+caso 3: determinar cuantos mayores de edad hay
+"""
+
 class Persona:
     
     # Metodo constructor vacio
@@ -42,10 +60,64 @@ class Persona:
             return False
         
 
-# entrada de datos por teclado
-nombre = input("Escriba su nombre: ")
-edad = int(input("Escriba su edad: "))
-dni = input("Escriba su cedula: ")
+# funciones para la entrada de datos por teclado y validacion de datos
+
+def validacionNombre():
+
+    while True:
+        nombre = input("Escriba su nombre: ")
+
+        # el ciclo se va a romper cuando solamente sean caracteres
+        if(nombre.isalpha()):
+            break
+        else:
+            print("\nError, escriba caracteres\n")
+
+    return nombre
+
+
+def validacionEdad():
+
+    while True:
+        
+        band = False
+
+        # esta excepcion es para capturar que sea solamente un numero y si es asi activa la bandera a true
+        try:
+            edad = int(input("Escriba su edad: "))
+            band = True
+        except ValueError:
+            print("\nError, ingrese una edad valida\n")
+
+        # cuando la bandera sea true va a aplicar la siguiente condicion, que es que sea mayor a cero y menor 100 para poder salir del ciclo
+        if(band):
+            if(edad > 0 and edad < 100):
+                break
+            else:
+                print("\nError, escriba una edad mayor a cero\n")
+
+    return edad
+    
+
+def validacionCedula():
+
+    while True:
+
+        dni = input("Escriba su cedula: ")
+
+        # verifica si no son caracteres y ademas que tenga un tamaño entre 6 y 8 digitos
+        if(not (dni.isalpha()) and (len(dni) > 5 and len(dni) < 9)):
+            break
+        else:
+            print("\nError, escriba una cedula valida\n")
+
+    return dni
+
+print("\nPrimera Parte del Ejerccio:\n")
+
+nombre = validacionNombre()
+edad = validacionEdad()
+dni = validacionCedula()
 
 persona1 = Persona()
 persona1.setterNombre(nombre)
@@ -70,14 +142,14 @@ for f in range(filas):
     registro = []
 
     # entrada de datos por teclado
-    nombre = input("\nEscriba su nombre: ")
+    nombre = validacionNombre()
     registro.append(nombre)
-    edad = int(input("Escriba su edad: "))
+    edad = validacionEdad()
     registro.append(edad)
-    dni = input("Escriba su cedula: ")
+    dni = validacionCedula()
     registro.append(dni)
 
-    # agregamos este registro a lam lista de personas
+    # agregamos este registro a la lista de personas
     personas.append(registro)
 
 # blucle para crear los objetos segun la cantidad de registros
@@ -90,13 +162,15 @@ for i in range(len(personas)):
     persona.setterDni(personas[i][2])
     objetos.append(persona)
 
-# ahora verificamos en el registro cual de las personas es mayor de edad
+# ahora verificamos cuantas personas mayor de edad hay
 
 print("")
+contMayoresEdad = 0
 for i in range(len(objetos)):
     if(objetos[i].mayorEdad()):
-        objetos[i].mostrarDatos()
-        print("Es mayor de edad\n")
+        contMayoresEdad += 1
+
+print("Hay " + str(contMayoresEdad) + " personas mayores de edad")
 
 
 
