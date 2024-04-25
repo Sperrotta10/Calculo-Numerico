@@ -1,8 +1,8 @@
 En esta Practica2 se creo un entorno virtual 
 con una version de python 3.11, en la anterior
-practica realiza mi proyecto con python 3.12
+practica realize mi proyecto con python 3.12
 y con todas las librerias que tengo descargada
-en mi sistema, en esta Practica2 nada mas descague
+en mi sistema, en esta Practica2 nada mas descargue
 una libreria la cual es numpy y hice un ejemplo
 sencillo para probar. El entorno virtual lo cree
 con Conda
