@@ -5,4 +5,6 @@ y con todas las librerias que tengo descargada
 en mi sistema, en esta Practica2 nada mas descargue
 una libreria la cual es numpy y hice un ejemplo
 sencillo para probar. El entorno virtual lo cree
-con Conda
+con Conda y el archivo txt que se llama requiements
+son las librerias que tengo en mi entorno virtual
+que cree.
