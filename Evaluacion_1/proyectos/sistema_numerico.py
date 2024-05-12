@@ -1,36 +1,60 @@
-conversion = ""
-
+# diccionarios para hacer las respectivas conversiones a hexadecimal cuando lo requieran
 hexa = {10 : "a",
         11 : "b",
         12 : "c",
         13 : "d",
         14 : "e",
-        15 : "f"}
+        15 : "f",}
 
-numero = int(input("Escoja el numero decimal que desee: "))
-cociente = numero
-print("1- Binario \n2- Octal \n3-Hexadecimal")
-tipo = int(input("Que conversion desearia realizar: "))
-
-if(tipo == 1):
-    tipo = 2
-elif(tipo == 2):
-    tipo = 8
-elif(tipo == 3):
-    tipo = 16
+hexa2 = {"a" : 10,
+         "b" : 11,
+         "c" : 12,
+         "d" : 13,
+         "e" : 14,
+         "f" : 15}
 
 
+# metodo para indentificar la base
+def tipo_base(tipo):
+
+    if(tipo.lower() == "binario"):
+        tipo = 2
+    elif(tipo.lower() == "octal"):
+        tipo = 8
+    elif(tipo.lower() == "hexadecimal"):
+        tipo = 16
+    elif(tipo.lower() == "decimal"):
+        tipo = 10
+
+    return tipo
+
+# metodo para identificar el tipo de variable
+def tipo_variable(tipo,numero):
+
+    if(tipo.lower() == "binario"):
+        numero = int(numero)
+    elif(tipo.lower() == "octal"):
+        numero = int(numero)
+    elif(tipo.lower() == "hexadecimal"):
+        numero = numero
+    elif(tipo.lower() == "decimal"):
+        numero = int(numero)
+
+    return numero
 
 
+# metodo para pasar de decimal a (octal,binario,hexadecimal,ect)
 def decimal_cualquier_sistema(numero,tipo,cociente):
 
     conversion = ""
 
+    # el ciclo se va a parar siempre y cuando cociente sea menor a tipo
     while cociente >= tipo:
 
         cociente = numero // tipo
         residuo = numero % tipo
 
+        # identificamos si el residuo es mayor a 9 para indentificar cuando se hexadecimal y convertir el numero en una letra
         if(residuo > 9):
             residuo = hexa[residuo]
 
@@ -39,6 +63,7 @@ def decimal_cualquier_sistema(numero,tipo,cociente):
 
         if(cociente < tipo):
 
+            # identificamos si el cociente es mayor a 9 para indentificar cuando se hexadecimal y convertir el numero en una letra
             if(cociente > 9):
                 cociente = hexa[cociente]
                 
@@ -47,11 +72,75 @@ def decimal_cualquier_sistema(numero,tipo,cociente):
     return conversion
 
 
+# metodo para pasa de (octal,binario,hexadecimal, ect) a decimal
 def cualquier_sistema_decimal(numero,tipo):
 
-    lista_numero = list(numero)
-    print(lista_numero)
+    # num x base^expo
+    lista_numero = list(str(numero)) # convertimos el numero en una lista para separarlo por carcteres
+    exponente = len(lista_numero) - 1
+    conversion = 0
+    
+    for i in lista_numero:
+
+        # esto es para verificar si hay alguna letra para identificar cuando sea hexadecimal y convertir la letra en numero
+        for valor in hexa2:
+            if(valor == i):
+                i = hexa2[valor]
+
+        conversion += int(i) * (tipo**exponente)
+        exponente -= 1
+
+    return conversion
 
 
-print(cualquier_sistema_decimal(numero,0))
-#print(decimal_cualquier_sistema(numero,tipo,cociente))
+def ejecucion_programa(tipo,numero,cociente,tipo1):
+
+    resultado = 0
+
+    if(tipo1 == 2):
+        
+        if(tipo == 8):
+            numero = cualquier_sistema_decimal(numero,tipo)
+            resultado = decimal_cualquier_sistema(numero,2,numero)
+        elif(tipo == 16):
+            numero = cualquier_sistema_decimal(numero,tipo)
+            resultado = decimal_cualquier_sistema(numero,2,numero)
+        elif(tipo == 10):
+            resultado = decimal_cualquier_sistema(numero,2,cociente)
+
+    elif(tipo1 == 8):
+        
+        if(tipo == 2):
+            numero = cualquier_sistema_decimal(numero,tipo)
+            resultado = decimal_cualquier_sistema(numero,8,numero)
+        elif(tipo == 16):
+            numero = cualquier_sistema_decimal(numero,tipo)
+            resultado = decimal_cualquier_sistema(numero,8,numero)
+        elif(tipo == 10):
+            resultado = decimal_cualquier_sistema(numero,8,cociente)
+
+    elif(tipo1 == 16):
+        
+        if(tipo == 2):
+            numero = cualquier_sistema_decimal(numero,tipo)
+            resultado = decimal_cualquier_sistema(numero,16,numero)
+        elif(tipo == 8):
+            numero = cualquier_sistema_decimal(numero,tipo)
+            resultado = decimal_cualquier_sistema(numero,16,numero)
+        elif(tipo == 10):
+            resultado = decimal_cualquier_sistema(numero,16,cociente)
+
+    elif(tipo1 == 10):
+       
+        if(tipo == 2):
+            resultado = cualquier_sistema_decimal(numero,tipo)
+        elif(tipo == 16):
+            resultado = cualquier_sistema_decimal(numero,tipo)
+        elif(tipo == 8):
+            resultado = cualquier_sistema_decimal(numero,tipo)
+    
+    return resultado
+
+
+#tipo,numero,tipo1 = menu_opcines()
+#ejecucion_programa(tipo,numero,numero,tipo1)
