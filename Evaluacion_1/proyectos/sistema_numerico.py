@@ -25,6 +25,10 @@ def tipo_base(tipo):
         tipo = 16
     elif(tipo.lower() == "decimal"):
         tipo = 10
+    elif(tipo.lower() == "terciario"):
+        tipo = 3
+    elif(tipo.lower() == "cuaternario"):
+        tipo = 4
 
     return tipo
 
@@ -39,6 +43,10 @@ def tipo_variable(tipo,numero):
         numero = numero
     elif(tipo.lower() == "decimal"):
         numero = int(numero)
+    elif(tipo.lower() == "terciario"):
+        numero = int(numero)
+    elif(tipo.lower() == "cuaternario"):
+        numero = int(numero)
 
     return numero
 
@@ -48,26 +56,32 @@ def decimal_cualquier_sistema(numero,tipo,cociente):
 
     conversion = ""
 
-    # el ciclo se va a parar siempre y cuando cociente sea menor a tipo
-    while cociente >= tipo:
+    if(not(numero < tipo)):
+        # el ciclo se va a parar siempre y cuando cociente sea menor a tipo
+        while cociente >= tipo:
 
-        cociente = numero // tipo
-        residuo = numero % tipo
+            cociente = numero // tipo
+            residuo = numero % tipo
 
-        # identificamos si el residuo es mayor a 9 para indentificar cuando se hexadecimal y convertir el numero en una letra
-        if(residuo > 9):
-            residuo = hexa[residuo]
+            # identificamos si el residuo es mayor a 9 para indentificar cuando se hexadecimal y convertir el numero en una letra
+            if(residuo > 9):
+                residuo = hexa[residuo]
 
-        conversion = str(residuo) + conversion
-        numero = cociente
+            conversion = str(residuo) + conversion
+            numero = cociente
 
-        if(cociente < tipo):
+            if(cociente < tipo):
 
-            # identificamos si el cociente es mayor a 9 para indentificar cuando se hexadecimal y convertir el numero en una letra
-            if(cociente > 9):
-                cociente = hexa[cociente]
-                
-            conversion = str(cociente) + conversion
+                # identificamos si el cociente es mayor a 9 para indentificar cuando se hexadecimal y convertir el numero en una letra
+                if(cociente > 9):
+                    cociente = hexa[cociente]
+                    
+                conversion = str(cociente) + conversion
+    else:
+
+        if(tipo == 16 and numero > 9):
+            numero = hexa[numero]
+        conversion = numero
 
     return conversion
 
@@ -97,48 +111,18 @@ def ejecucion_programa(tipo,numero,cociente,tipo1):
 
     resultado = 0
 
-    if(tipo1 == 2):
-        
-        if(tipo == 8):
-            numero = cualquier_sistema_decimal(numero,tipo)
-            resultado = decimal_cualquier_sistema(numero,2,numero)
-        elif(tipo == 16):
-            numero = cualquier_sistema_decimal(numero,tipo)
-            resultado = decimal_cualquier_sistema(numero,2,numero)
-        elif(tipo == 10):
-            resultado = decimal_cualquier_sistema(numero,2,cociente)
+    if(tipo == tipo1):
+        resultado = numero
+    else:
 
-    elif(tipo1 == 8):
-        
-        if(tipo == 2):
-            numero = cualquier_sistema_decimal(numero,tipo)
-            resultado = decimal_cualquier_sistema(numero,8,numero)
-        elif(tipo == 16):
-            numero = cualquier_sistema_decimal(numero,tipo)
-            resultado = decimal_cualquier_sistema(numero,8,numero)
-        elif(tipo == 10):
-            resultado = decimal_cualquier_sistema(numero,8,cociente)
+        if(tipo1 == 10):
 
-    elif(tipo1 == 16):
-        
-        if(tipo == 2):
+            resultado = cualquier_sistema_decimal(numero,tipo)
+        else:
             numero = cualquier_sistema_decimal(numero,tipo)
-            resultado = decimal_cualquier_sistema(numero,16,numero)
-        elif(tipo == 8):
-            numero = cualquier_sistema_decimal(numero,tipo)
-            resultado = decimal_cualquier_sistema(numero,16,numero)
-        elif(tipo == 10):
-            resultado = decimal_cualquier_sistema(numero,16,cociente)
+            resultado = decimal_cualquier_sistema(numero,tipo1,numero)
 
-    elif(tipo1 == 10):
-       
-        if(tipo == 2):
-            resultado = cualquier_sistema_decimal(numero,tipo)
-        elif(tipo == 16):
-            resultado = cualquier_sistema_decimal(numero,tipo)
-        elif(tipo == 8):
-            resultado = cualquier_sistema_decimal(numero,tipo)
-    
+
     return resultado
 
 
