@@ -223,13 +223,18 @@ def main(page: ft.Page):
             # validacion para cambiar el tamano de la letra dependiendo del numero de incognitas
             if(len(vector_solucion) <= 3):
                 resultado_matriz.value = resultado
-            elif(len(vector_solucion) <= 5):
+                resultado_matriz.text_size = 12
+            elif(len(vector_solucion) == 4):
                 resultado_matriz.text_size = 9
-                resultado_matriz.width = 300
+                resultado_matriz.width = 260
+                resultado_matriz.value = resultado
+            elif(len(vector_solucion) == 5):
+                resultado_matriz.text_size = 9
+                resultado_matriz.width = 308
                 resultado_matriz.value = resultado
             else:
                 resultado_matriz.text_size = 9
-                resultado_matriz.width = 390
+                resultado_matriz.width = 350
                 resultado_matriz.value = resultado
 
             page.update()

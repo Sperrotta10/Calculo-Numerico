@@ -1,5 +1,16 @@
 import numpy as np
 
+
+
+"""
+Este es mi algoritmo de Gauss Jordan hecho por mi, tiene un pequeño detalle y es solamente 
+cuando se encuentra algun 0 en la diagonal principal, cuando se encuentra un cero (pivote)
+directamente no hace la operacion porque tengo una condicion para que no caiga en condicion de
+error, ya que no se puede dividir entre cero, en el resto de los casos funciona bien 
+"""
+
+
+
 class GaussJordan:
     def __init__(self,matriz,vector):
         self.matriz = matriz
