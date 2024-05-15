@@ -58,7 +58,7 @@ def decimal_cualquier_sistema(numero,tipo,cociente):
 
     if(not(numero < tipo)):
         # el ciclo se va a parar siempre y cuando cociente sea menor a tipo
-        while cociente >= tipo:
+        while True:
 
             cociente = numero // tipo
             residuo = numero % tipo
@@ -77,6 +77,7 @@ def decimal_cualquier_sistema(numero,tipo,cociente):
                     cociente = hexa[cociente]
                     
                 conversion = str(cociente) + conversion
+                break
     else:
 
         if(tipo == 16 and numero > 9):

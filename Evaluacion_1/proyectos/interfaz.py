@@ -102,7 +102,6 @@ def main(page: ft.Page):
         if(lista1.value != None and entrada.value != "" and lista2.value != None):
 
             # obtenemos los valores donde:
-            
             tipo = sn.tipo_base(lista1.value)                           # tipo es el sistema base del numero que queremos convertir
             numero = sn.tipo_variable(lista1.value,entrada.value)       # numero es el numero que vamos a cconvertir
             cociente = numero                                           # tipo1 es al sistema base que deseamos hacer la conversion
@@ -138,19 +137,19 @@ def main(page: ft.Page):
 
         # validacion para que solamente se puede generar una matriz 2x2 en adelante
         if(txt_size.value != ""):
-            if(int(txt_size.value) >= 2):
+            if(int(txt_size.value) >= 2 and int(txt_size.value) <= 6):
 
                 txt_size.read_only = True
-                tamano = int(txt_size.value)    # obtenemos el valor de las filas y columnas
+                tamano = int(txt_size.value)    # obteneos el valor de las filas y columnas
                 matrix_container.controls = []  # Limpia los controles existentes
 
                 for i in range(tamano):
 
                     # usamos una lista por compresion para generar una serie de filas
                     # dentro de la lista por comprension tenemos dos condiciones, una para identificar el texfield para marcar la igualdad y que no se puede ingresar texto
-                    row = ft.Row([ft.TextField(input_filter=ft.InputFilter(allow=True, regex_string = r"[0-9]", replacement_string=""),
-                                bgcolor= "#FFFFFF", width=60, height= 40, text_align = ft.TextAlign.CENTER, value = "=" if (j == tamano) else "",
-                                read_only = (j == tamano)) for j in range(tamano + 2)])
+                    row = ft.Row([ft.TextField(input_filter=ft.InputFilter(allow=True, regex_string = r"[0-9{1,3}]", replacement_string=""),
+                                bgcolor= "#FFFFFF", width=60, height= 38, text_align = ft.TextAlign.CENTER,
+                                value = "=" if (j == tamano) else "", read_only = (j == tamano)) for j in range(tamano + 2)])
                     
                     matrix_container.controls.append(row)
 
@@ -225,16 +224,12 @@ def main(page: ft.Page):
             if(len(vector_solucion) <= 3):
                 resultado_matriz.value = resultado
             elif(len(vector_solucion) <= 5):
-                resultado_matriz.text_size = 10
+                resultado_matriz.text_size = 9
                 resultado_matriz.width = 300
                 resultado_matriz.value = resultado
-            elif(len(vector_solucion) <= 7):
-                resultado_matriz.text_size = 10
-                resultado_matriz.width = 380
-                resultado_matriz.value = resultado
             else:
-                resultado_matriz.text_size = 10
-                resultado_matriz.width = 470
+                resultado_matriz.text_size = 9
+                resultado_matriz.width = 390
                 resultado_matriz.value = resultado
 
             page.update()
@@ -343,7 +338,7 @@ def main(page: ft.Page):
         ],
         expand=True,
         alignment = ft.MainAxisAlignment.CENTER,
-        spacing= 30
+        spacing= 27
         )
 
         page.views.clear()
