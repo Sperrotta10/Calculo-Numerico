@@ -12,46 +12,39 @@ class GaussJordan:
 
         AB = np.concatenate((self.matriz,self.vector), axis = 1)
 
-        # Pivoteo parcial por filas
-        tamano = np.shape(AB)
-        n = tamano[0]
-        m = tamano[1]
+        # Matriz aumentada
+        fila_columnas = np.shape(AB)
 
-        # Para cada fila en AB
-        for i in range(0,n-1,1):
-            # columna desde diagonal i en adelante
-            columna = abs(AB[i:,i])
-            dondemax = np.argmax(columna)
-            
-            # dondemax no está en diagonal
-            if (dondemax !=0):
-                # intercambia filas
-                temporal = np.copy(AB[i,:])
-                AB[i,:] = AB[dondemax+i,:]
-                AB[dondemax+i,:] = temporal
-                
-
-        # eliminacion hacia adelante
-        for i in range(0,n-1,1):
-            pivote = AB[i,i]
-            adelante = i + 1
-            for k in range(adelante,n,1):
-                factor = AB[k,i]/pivote
-                AB[k,:] = AB[k,:] - AB[i,:]*factor
+        # tamano de las filas y columnas
+        fila = fila_columnas[0]
+        columnas = fila_columnas[1]
 
 
-        # elimina hacia atras
-        ultfila = n-1
-        ultcolumna = m-1
-        for i in range(ultfila,0-1,-1):
-            pivote = AB[i,i]
-            atras = i-1 
-            for k in range(atras,0-1,-1):
-                factor = AB[k,i]/pivote
-                AB[k,:] = AB[k,:] - AB[i,:]*factor
-            # diagonal a unos
+        # colocar ceros en la triangular inferior
+        for i in range(fila - 1):
+
+            for j in range(0,fila-i-1,1):
+                if(AB[i,i] != 0):
+                    f = AB[i,:]/AB[i,i]
+                    AB[j+i+1,:] = AB[j+i+1,:] - AB[j+i+1,i] * f
+
+
+        # colocar ceros a la triangular superior
+        for i in range(fila-1):
+
+            for j in range(fila-(fila-1)+i):
+                if(AB[i+1,i+1] != 0):
+                    f = AB[i+1,:]/AB[i+1,i+1]
+                    AB[j,:] = AB[j,:] - AB[j,i+1] * f
+
+
+        # convertir todo los pivotes a 1
+        for i in range(fila):
             AB[i,:] = AB[i,:]/AB[i,i]
-        x = np.copy(AB[:,ultcolumna])
+
+
+        x = AB[:,columnas - 1]
+        print(AB)
 
         return x
 
